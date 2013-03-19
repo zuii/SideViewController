@@ -8,7 +8,9 @@
 
 #import "SVAppDelegate.h"
 
-#import "SVViewController.h"
+#import "SVSideViewController.h"
+#import "SVLeftViewController.h"
+#import "SVRightViewController.h"
 
 @implementation SVAppDelegate
 
@@ -16,9 +18,20 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[SVViewController alloc] initWithNibName:@"SVViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
+//    self.viewController = [[SVViewController alloc] initWithNibName:@"SVViewController" bundle:nil];
+    
+    // side view controller and default center view controller
+    UIViewController* defaultVC = [[UIViewController alloc] init];
+    defaultVC.view.backgroundColor = [UIColor lightGrayColor];
+    self.sideViewController = [[SVSideViewController alloc] initWithRootViewController:defaultVC];
+    
+    // left and right view controller
+    self.sideViewController.leftViewController = [[SVLeftViewController alloc] init];
+    self.sideViewController.rightViewController = [[SVRightViewController alloc] init];
+    
+    self.window.rootViewController = self.sideViewController;//self.viewController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

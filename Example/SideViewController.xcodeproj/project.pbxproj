@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A6CD40BC16F8B4E80039C7BD /* SVLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CD40BB16F8B4E80039C7BD /* SVLeftViewController.m */; };
+		A6CD40BF16F8B4F20039C7BD /* SVRightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CD40BE16F8B4F20039C7BD /* SVRightViewController.m */; };
 		A6DA4BC216E1CE86008A0201 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6DA4BC116E1CE86008A0201 /* UIKit.framework */; };
 		A6DA4BC416E1CE86008A0201 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6DA4BC316E1CE86008A0201 /* Foundation.framework */; };
 		A6DA4BC616E1CE86008A0201 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6DA4BC516E1CE86008A0201 /* CoreGraphics.framework */; };
@@ -37,6 +39,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A6CD40BA16F8B4E80039C7BD /* SVLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLeftViewController.h; sourceTree = "<group>"; };
+		A6CD40BB16F8B4E80039C7BD /* SVLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLeftViewController.m; sourceTree = "<group>"; };
+		A6CD40BD16F8B4F20039C7BD /* SVRightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRightViewController.h; sourceTree = "<group>"; };
+		A6CD40BE16F8B4F20039C7BD /* SVRightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRightViewController.m; sourceTree = "<group>"; };
 		A6DA4BBD16E1CE86008A0201 /* SideViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6DA4BC116E1CE86008A0201 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A6DA4BC316E1CE86008A0201 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -110,6 +116,10 @@
 				A6DA4BDA16E1CE86008A0201 /* SVViewController.m */,
 				A6DA4BDC16E1CE86008A0201 /* SVViewController.xib */,
 				A6DA4BC816E1CE86008A0201 /* Supporting Files */,
+				A6CD40BA16F8B4E80039C7BD /* SVLeftViewController.h */,
+				A6CD40BB16F8B4E80039C7BD /* SVLeftViewController.m */,
+				A6CD40BD16F8B4F20039C7BD /* SVRightViewController.h */,
+				A6CD40BE16F8B4F20039C7BD /* SVRightViewController.m */,
 			);
 			path = SideViewController;
 			sourceTree = "<group>";
@@ -229,6 +239,8 @@
 				A6DA4BDB16E1CE86008A0201 /* SVViewController.m in Sources */,
 				A6DFD61516EBC7BD00A73FE3 /* SVCenterContainerController.m in Sources */,
 				A6DFD61616EBC7BD00A73FE3 /* SVSideViewController.m in Sources */,
+				A6CD40BC16F8B4E80039C7BD /* SVLeftViewController.m in Sources */,
+				A6CD40BF16F8B4F20039C7BD /* SVRightViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

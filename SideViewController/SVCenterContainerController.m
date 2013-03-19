@@ -10,7 +10,6 @@
 
 @interface SVCenterContainerController ()
 {
-    UIViewController*    _rootViewController;
 }
 
 @end
@@ -25,7 +24,7 @@
     self = [super init];
     if (self) {
         // Custom initialization
-        _rootViewController = rootViewController;
+        _currentViewController = rootViewController;
     }
     
     return self;
@@ -35,11 +34,8 @@
 {
     [super viewDidLoad];
 	
-    // setup root view controller
-    if (_currentViewController == nil)
-    {
-        [self setupRootViewController];
-    }
+    // resume current view controller
+    [self addCurrentViewControllerToContainer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,23 +44,45 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Setup Root View Controller
--(void)setupRootViewController
+#pragma mark - Current View Controller
+-(void)addCurrentViewControllerToContainer
 {
-    [self addChildViewController:_rootViewController];
+    [self addChildViewController:_currentViewController];
     
-    _rootViewController.view.frame = self.view.bounds;
-    [self.view addSubview:_rootViewController.view];
+    _currentViewController.view.frame = self.view.bounds;
+    [self.view addSubview:_currentViewController.view];
     
-    [_rootViewController didMoveToParentViewController:self];
+    [_currentViewController didMoveToParentViewController:self];
+}
+
+-(void)transitionToViewController:(UIViewController*)toViewController animated:(BOOL)animated
+{
+    if (toViewController == nil) return;
     
-    // let rootVC to be the current VC
-    _currentViewController = _rootViewController;
+    if (self.currentViewController)
+    {
+        [self addChildViewController:toViewController];
+        [self transitionFromViewController:_currentViewController toViewController:toViewController duration:0.25 options:0 animations:^{
+            
+        } completion:^(BOOL finished) {
+            [_currentViewController didMoveToParentViewController:self];
+            
+            [_currentViewController willMoveToParentViewController:nil];
+            [_currentViewController removeFromParentViewController];
+        }];
+    }
+    else
+    {
+        _currentViewController = toViewController;
+        [self addCurrentViewControllerToContainer];
+    }
 }
 
 #pragma mark - Present Current View Controller
 -(void)setCurrentViewController:(UIViewController *)currentViewController
 {
+    if (_currentViewController == currentViewController) return;
+    
     [self setCurrentViewController:currentViewController animated:NO];
 }
 
@@ -79,7 +97,10 @@
     }
     
     //
-    _currentViewController = currentViewController;
+    if ([self isViewLoaded])
+    {
+        [self transitionToViewController:currentViewController animated:animated];
+    }
 }
 
 @end

@@ -8,12 +8,14 @@
 
 #import "SVSideViewController.h"
 #import <objc/runtime.h>
+#import "SVCenterContainerController.h"
 
 @interface SVSideViewController ()
 {
-    UIViewController*    _centerContainerController; // 用于包含所有center view controller的容器
+    SVCenterContainerController*   _centerContainerController; // 用于包含所有center view controller的容器
+    UIViewController*              _rootViewController; // center view controller
     
-    NSMutableDictionary* _viewControllersDictionary; // 保存所有需要持有的vc
+    NSMutableDictionary*           _viewControllersDictionary; // 保存所有需要持有的vc
 }
 
 @end
@@ -26,10 +28,9 @@
     
     self = [super init];
     if (self) {
-        
         _viewControllersDictionary = [[NSMutableDictionary alloc] init];
         
-        [self setRootViewController];
+        _rootViewController = rootViewController;
     }
     
     return self;
@@ -39,7 +40,10 @@
 {
     [super viewDidLoad];
 	
+    [self addLeftViewControllerToSVC];
+    [self addRightViewControllerToSVC];
     
+    [self setupCenterContainerController];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,26 +57,72 @@
 {
     if (_centerContainerController == nil)
     {
-        _centerContainerController = [[UIViewController alloc] init];
+        _centerContainerController = [[SVCenterContainerController alloc] initWithRootViewController:_rootViewController];
         
-        
+        // add to svc
+        [self addChildViewController:_centerContainerController];
+        _centerContainerController.view.frame = self.view.bounds;
+        [self.view addSubview:_centerContainerController.view];
+        [_centerContainerController didMoveToParentViewController:self];
     }
 }
 
--(void)setRootViewController
+-(UIViewController*)centerViewController
 {
-    
+    return _centerContainerController.currentViewController;
 }
 
-#pragma mark - Left View Controller
+#pragma mark Left View Controller
 -(void)setLeftViewController:(UIViewController *)leftViewController
 {
     if (leftViewController == _leftViewController) return;
     
+    _leftViewController = leftViewController;
+    if ([self isViewLoaded])
+    {
+        //  add to svc
+        [self addLeftViewControllerToSVC];
+    }
+}
+
+-(void)addLeftViewControllerToSVC
+{
     if (_leftViewController)
     {
-        // 已存在leftViewController，先移除
+        [self addChildViewController:_leftViewController];
         
+        _leftViewController.view.frame = self.view.bounds;
+        [self.view addSubview:_leftViewController.view];
+        [self.view sendSubviewToBack:_leftViewController.view];
+        
+        [_leftViewController didMoveToParentViewController:self];
+    }
+}
+
+#pragma mark Right View Controller
+-(void)setRightViewController:(UIViewController *)rightViewController
+{
+    if (rightViewController == _rightViewController) return;
+    
+    _rightViewController = rightViewController;
+    if ([self isViewLoaded])
+    {
+        // add to svc
+        [self addRightViewControllerToSVC];
+    }
+}
+
+-(void)addRightViewControllerToSVC
+{
+    if (_rightViewController)
+    {
+        [self addChildViewController:_rightViewController];
+        
+        _rightViewController.view.frame = self.view.bounds;
+        [self.view addSubview:_rightViewController.view];
+        [self.view sendSubviewToBack:_rightViewController.view];
+        
+        [_rightViewController didMoveToParentViewController:self];
     }
 }
 
@@ -92,12 +142,12 @@
     [_viewControllersDictionary setObject:vc forKey:tag];
     
     // to presenting
-    
+    [self presentCenterViewController:vc];
 }
 
 -(void)presentCenterViewController:(UIViewController *)viewControllerToPresent
 {
-
+    [self presentCenterViewController:viewControllerToPresent animated:YES];
 }
 
 -(void)presentCenterViewController:(UIViewController *)viewControllerToPresent
